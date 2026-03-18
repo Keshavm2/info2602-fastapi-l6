@@ -15,6 +15,7 @@
 
 {% block content %} 
       <main class="container" style="padding-top:100px">
+        
 
         
         <form  method="GET" action="/admin">
@@ -35,7 +36,20 @@
             </div>
           </div>
 
-
+          <div class="row">
+            <label>
+             <input class="with-gap blue" name="done" type="radio" value="true" onchange="this.form.submit()" {{ "checked" if done=="true" }} />
+             <span>Done</span>
+           </label>
+           <label>
+             <input class="with-gap blue" name="done" type="radio" value="false" onchange="this.form.submit()" {{ "checked" if done=="false" }} />
+             <span>Not Done</span>
+           </label>
+           <label>
+             <input class="with-gap blue" name="done" type="radio" value="any" onchange="this.form.submit()" {{ "checked" if done=="any" }} />
+             <span>Any</span>
+           </label>
+         </div>
         </form>
         
         <table>
@@ -101,9 +115,17 @@
               </li>
               {% endif %}
             </ul>
-        
+            <div class="input-field" style="position: absolute; right: 25px; margin: 0; ">
+              <select id="limit-select" onchange="location = this.value;">
+                {% for n in [10, 25, 50, 100] %}
+                <option value="{{ url_for('admin_page') }}?page=1&limit={{ n }}&q={{ q }}" {% if pagination.limit==n %}selected{% endif
+                  %}>
+                  {{ n }} rows
+                </option>
+                {% endfor %}
+              </select>
+            </div>
           </div>
-
         
-      </main>
-{% endblock %}
+        </main>
+        {% endblock %}
